@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
@@ -7,28 +8,24 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Starting League Client Auto-Accept...");
-            // Wait for League Client to open and initialize LCU
+            Console.WriteLine("Starting League Client Auto-Accept (WebSocket Mode)...");
             if (!LCU.isLeagueOpen)
             {
                 Console.WriteLine("Waiting for League Client to open...");
                 LCU.WaitForLeagueClient();
             }
 
-            // Enable auto-accept
-            MainLogic.isAutoAcceptOn = true;
+            // Start the WebSocket listener (async)
+            var leagueAuth = typeof(LCU)
+                .GetField("leagueAuth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
+                .GetValue(null) as string[];
+            string auth = leagueAuth[0];
+            string port = leagueAuth[1];
 
-            // Start the auto-accept loop in a background thread
-            Thread autoAcceptThread = new Thread(MainLogic.StartAutoAcceptLoop)
-            {
-                IsBackground = true
-            };
-            autoAcceptThread.Start();
+            var wsTask = LCUWebSocketListener.StartAsync(port, auth);
 
-            Console.WriteLine("Auto-accept is running. Write Anything Then Press Enter To Exit...");
+            Console.WriteLine("WebSocket auto-accept is running. Press Enter to exit...");
             Console.ReadLine();
-            // Optionally, you can set isAutoAcceptOn = false here to stop the loop gracefully
-            MainLogic.isAutoAcceptOn = false;
         }
     }
 }
