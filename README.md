@@ -57,15 +57,5 @@ Now once the app is launched, you will see the console screen
 
 ---
 
-## Migration from Polling to WebSocket
-
-- **Old Approach (Polling):**  
-  The tool used `MainLogic.cs` to repeatedly poll the LCU API for the current game phase. This method worked but was less efficient, as it required constant HTTP requests and could introduce delays or unnecessary load.
-
-- **New Approach (WebSocket):**  
-  The tool now uses `LCUWebSocketListener.cs` to listen for real-time events from the League Client via WebSocket. This allows the tool to react instantly when a match is found, with lower resource usage and better reliability.
-
----
-
 ## Notes
 - This project is for educational and personal use only.
