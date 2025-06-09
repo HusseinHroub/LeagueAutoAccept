@@ -53,4 +53,5 @@ The project originally used a polling approach to check the game state, but has 
 ---
 
 ## Notes
+- As for a current bug, only launch it when the client is opened, otherwise it will not receive any events (will be fixed in future)
 - This project is for educational and personal use only.
