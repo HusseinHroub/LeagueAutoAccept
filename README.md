@@ -67,14 +67,5 @@ Now once the app is launched, you will see the console screen
 
 ---
 
-## How to Use
-
-1. **Build the project in Visual Studio 2022 (.NET 9).**
-2. **Run the generated executable.**
-3. **The tool will wait for the League Client to start, then automatically accept matches when they are found.**
-
----
-
 ## Notes
-- Because of an existing bug, only launch it when league client is opened, otherwise it will not receive any events (will be fixed in future)
 - This project is for educational and personal use only.
