@@ -1,25 +1,24 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1
+﻿namespace ConsoleApp1
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Starting League Client Auto-Accept (WebSocket Mode)...");
-            if (!LCU.isLeagueOpen)
+            while (true)
             {
-                Console.WriteLine("Waiting for League Client to open...");
-                LCU.WaitForLeagueClient();
+                try
+                {
+                    Console.WriteLine("Starting League Client Auto-Accept (WebSocket Mode)...");
+                    LCU.WaitForLeagueClient();
+                    await LCUWebSocketListener.StartAsync(LCU.Port, LCU.Token);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] {ex.GetType().Name}: {ex.Message}");
+                    Console.WriteLine("Retrying in 1 second...");
+                    await Task.Delay(1000);
+                }
             }
-
-            // Start the WebSocket listener (async)
-            var wsTask = LCUWebSocketListener.StartAsync(LCU.Port, LCU.Token);
-
-            Console.WriteLine("WebSocket auto-accept is running. Press Enter to exit...");
-            Console.ReadLine();
         }
     }
 }

@@ -10,7 +10,6 @@ namespace ConsoleApp1
     {
         public static string Token { get; private set; }
         public static string Port { get; private set; }
-        public static bool isLeagueOpen = false;
 
         public static bool CheckIfLeagueClientIsOpen()
         {
@@ -25,7 +24,6 @@ namespace ConsoleApp1
                 if (client != null)
                 {
                     SetLeagueAuth(client);
-                    isLeagueOpen = true;
                     break;
                 }
 

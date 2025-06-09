@@ -27,8 +27,10 @@ namespace ConsoleApp1
 
         private static async Task ConnectWebSocketAsync(ClientWebSocket ws, string port)
         {
+            
             var uri = new Uri($"wss://127.0.0.1:{port}/");
             await ws.ConnectAsync(uri, CancellationToken.None);
+            Console.WriteLine("WebSocket connection opened.");
         }
 
         private static async Task SubscribeToSessionEventsAsync(ClientWebSocket ws)
@@ -43,9 +45,10 @@ namespace ConsoleApp1
             var buffer = new byte[4096];
             while (ws.State == WebSocketState.Open)
             {
-                var msg = await ReceiveFullMessageAsync(ws, buffer);
-                HandleWebSocketMessage(msg);
+               var msg = await ReceiveFullMessageAsync(ws, buffer);
+               HandleWebSocketMessage(msg);
             }
+            Console.WriteLine($"WebSocket connection closed. State: {ws.State}");
         }
 
         private static async Task<string> ReceiveFullMessageAsync(ClientWebSocket ws, byte[] buffer)
@@ -63,6 +66,10 @@ namespace ConsoleApp1
 
         private static void HandleWebSocketMessage(string msg)
         {
+            if(msg.Equals(""))
+            {
+                return;
+            }
             try
             {
                 using var doc = JsonDocument.Parse(msg);
