@@ -19,6 +19,7 @@ Based on your windows version choose the correct folder
 Open the LOLAutoAccept.exe
 
 Because it cost money to get a valid certificate, and am not willing to do so for this app, you will see the following screen:
+
 ![image](https://github.com/user-attachments/assets/d9d0b6d3-5256-4eab-923c-baae35ec9426)
 
 - If you don't trust my source code, simply click "Don't run", delete the app
