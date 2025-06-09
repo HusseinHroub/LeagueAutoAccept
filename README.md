@@ -8,7 +8,29 @@ The project originally used a polling approach to check the game state, but has 
 
 ---
 
-## File Overview
+## Install
+
+Go to [Releases](https://github.com/HusseinHroub/LeagueAutoAccept/releases)
+
+Download then extract *.rar (ex: 1.0.rar)
+
+Based on your windows version choose the correct folder
+
+Open the LOLAutoAccept.exe
+
+Because it cost money to get a valid certificate, and am not willing to do so for this app, you will see the following screen:
+![image](https://github.com/user-attachments/assets/d9d0b6d3-5256-4eab-923c-baae35ec9426)
+
+- If you don't trust my source code, simply click "Don't run", delete the app
+- Else, click on "More Info", then "Run anyway"
+
+![image](https://github.com/user-attachments/assets/a7d6a8ab-28a4-408b-bc42-cc2483a6963d)
+
+
+Now once the app is launched, you will see the console screen
+![image](https://github.com/user-attachments/assets/15429183-a02d-4720-9f93-f8dc2dd6a633)
+
+## Project File Overview
 
 ### `Program.cs`
 - **Entry point of the application.**
