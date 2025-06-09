@@ -16,13 +16,7 @@ namespace ConsoleApp1
             }
 
             // Start the WebSocket listener (async)
-            var leagueAuth = typeof(LCU)
-                .GetField("leagueAuth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)
-                .GetValue(null) as string[];
-            string auth = leagueAuth[0];
-            string port = leagueAuth[1];
-
-            var wsTask = LCUWebSocketListener.StartAsync(port, auth);
+            var wsTask = LCUWebSocketListener.StartAsync(LCU.Port, LCU.Token);
 
             Console.WriteLine("WebSocket auto-accept is running. Press Enter to exit...");
             Console.ReadLine();

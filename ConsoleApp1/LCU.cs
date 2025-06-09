@@ -8,7 +8,8 @@ namespace ConsoleApp1
 {
     internal class LCU
     {
-        private static string[] leagueAuth;
+        public static string Token { get; private set; }
+        public static string Port { get; private set; }
         public static bool isLeagueOpen = false;
 
         public static bool CheckIfLeagueClientIsOpen()
@@ -23,7 +24,7 @@ namespace ConsoleApp1
                 var client = Process.GetProcessesByName("LeagueClientUx").FirstOrDefault();
                 if (client != null)
                 {
-                    leagueAuth = GetLeagueAuth(client);
+                    SetLeagueAuth(client);
                     isLeagueOpen = true;
                     break;
                 }
@@ -33,7 +34,7 @@ namespace ConsoleApp1
             }
         }
 
-        private static string[] GetLeagueAuth(Process client)
+        private static void SetLeagueAuth(Process client)
         {
             string query = $"SELECT CommandLine FROM Win32_Process where ProcessId = {client.Id}";
             string commandLine = "";
@@ -48,11 +49,9 @@ namespace ConsoleApp1
                 }
             }
 
-            string port = Regex.Match(commandLine, @"--app-port=""?(\d+)""?").Groups[1].Value;
+            Port = Regex.Match(commandLine, @"--app-port=""?(\d+)""?").Groups[1].Value;
             string authToken = Regex.Match(commandLine, @"--remoting-auth-token=([a-zA-Z0-9_-]+)").Groups[1].Value;
-
-            string auth = Convert.ToBase64String(Encoding.UTF8.GetBytes("riot:" + authToken));
-            return new string[] { auth, port };
+            Token = Convert.ToBase64String(Encoding.UTF8.GetBytes("riot:" + authToken));
         }
 
         public static string[] ClientRequest(string method, string url, string body = null)
@@ -66,8 +65,8 @@ namespace ConsoleApp1
             {
                 using (HttpClient client = new HttpClient(handler))
                 {
-                    client.BaseAddress = new Uri("https://127.0.0.1:" + leagueAuth[1] + "/");
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", leagueAuth[0]);
+                    client.BaseAddress = new Uri("https://127.0.0.1:" + Port + "/");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Token);
 
                     var request = new HttpRequestMessage(new HttpMethod(method), url);
 
